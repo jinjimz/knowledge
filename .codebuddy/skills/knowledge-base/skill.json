@@ -1,0 +1,31 @@
+{
+  "name": "knowledge-base",
+  "version": "2.0.0",
+  "description": "个人知识库管理系统，支持多级分类、标签管理、Git 同步，完全兼容 Obsidian",
+  "author": "jinjimz",
+  "triggers": [
+    "记笔记",
+    "知识库状态",
+    "同步知识库",
+    "搜索知识库",
+    "整理知识库"
+  ],
+  "skillPath": "skill.md",
+  "scripts": {
+    "addNote": "scripts/add-note.py",
+    "initKb": "scripts/init-kb.sh",
+    "gitSync": "scripts/git-sync.sh",
+    "updateIndex": "scripts/update-index.sh"
+  },
+  "dependencies": {
+    "python": ">=3.7",
+    "pip": ["pyyaml"]
+  },
+  "config": {
+    "knowledgeBasePath": "data/",
+    "configFile": "data/.kb-config.yaml",
+    "indexPath": "data/_index/",
+    "templatePath": "data/_templates/",
+    "attachmentPath": "data/_attachments/"
+  }
+}
