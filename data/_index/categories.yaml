@@ -1,8 +1,6 @@
-# 分类索引
-# 更新时间: 2026-03-22
 categories:
   Inbox:
-    count: 0
+    count: 1
   Technology:
     Programming:
       count: 0
@@ -28,3 +26,4 @@ categories:
   Resources:
     Tools:
       count: 3
+'# 更新时间': '2026-03-22T12:25:18'

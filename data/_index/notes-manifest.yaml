@@ -1,69 +1,81 @@
-# 笔记清单
-# 更新时间: 2026-03-22T19:30:00
 notes:
-  - id: "1"
-    title: "在线画图工具 diagrams.net"
-    path: "Resources/Tools/在线画图工具_diagrams_net.md"
-    category: "Resources/Tools"
-    tags:
-      - 工具
-      - 画图
-      - 在线工具
-    created: "2026-03-22T00:00:00"
-    updated: "2026-03-22T00:00:00"
-    ai_summary: "diagrams.net 是一款免费的在线画图工具，可用于绘制流程图、架构图等各种图表。"
-  - id: "2"
-    title: "OpenClaw技术架构分析"
-    path: "Technology/AI/OpenClaw技术架构分析.md"
-    category: "Technology/AI"
-    tags:
-      - 架构
-      - AI
-      - Agent
-      - Gateway
-      - TypeScript
-      - 多Agent协作
-    created: "2026-03-22T10:30:00"
-    updated: "2026-03-22T10:30:00"
-    ai_summary: "OpenClaw是一个个人AI助手网关，运行在本地设备上，通过20+消息渠道提供AI对话能力。采用TypeScript+Node.js实现，核心包含Gateway服务器、多渠道消息适配、AI引擎(支持多模型Provider)、插件系统、浏览器控制、记忆系统等模块。支持多Agent协作，通过WebSocket+JSON-RPC协议通信，采用推送式(announce)机制和steer注入实现实时交互。会话管理基于文件系统持久化+LRU缓存，支持热重载。整体为单体架构，Agent嵌入Gateway进程运行。"
-  - id: "3"
-    title: "思源笔记 (SiYuan) - 本地优先的笔记系统"
-    path: "Resources/Tools/思源笔记_SiYuan_本地优先的笔记系统.md"
-    category: "Resources/Tools"
-    tags:
-      - 笔记系统
-      - 开源
-      - 本地优先
-      - 工具
-      - 知识管理
-    created: "2026-03-22T19:30:00+08:00"
-    updated: "2026-03-22T19:30:00+08:00"
-    ai_summary: "思源笔记是一款本地优先的个人知识管理系统,支持双向链接、块级引用等现代笔记功能,完全开源且注重数据隐私和安全。"
-  - id: "4"
-    title: "GitNexus - 项目知识图谱工具"
-    path: "Resources/Tools/GitNexus_项目知识图谱工具.md"
-    category: "Resources/Tools"
-    tags:
-      - 知识图谱
-      - GitHub
-      - 项目分析
-      - 开源
-      - 工具
-      - 代码可视化
-    created: "2026-03-22T20:00:00+08:00"
-    updated: "2026-03-22T20:00:00+08:00"
-    ai_summary: "GitNexus是一个GitHub项目，用于构建项目的知识图谱。它可以分析代码仓库的结构、依赖关系和知识组织，将项目信息以图谱形式呈现，帮助开发者更好地理解和导航复杂的代码库。"
-  - id: "5"
-    title: "OpenClaw使用Gemini模型配置指南"
-    path: "Technology/AI/OpenClaw使用Gemini模型配置指南.md"
-    category: "Technology/AI"
-    tags:
-      - OpenClaw
-      - Gemini
-      - VPN
-      - 证书配置
-      - AI
-      - 网络代理
-    created: "2026-03-22T20:15:00+08:00"
-    updated: "2026-03-22T20:15:00+08:00"
-    ai_summary: "在OpenClaw中使用Gemini模型需要科学上网工具。由于VPN软件使用中间人证书，需要在OpenClaw中配置信任或忽略SSL证书验证，才能正常访问Gemini API服务。"
+- id: '1'
+  title: 在线画图工具 diagrams.net
+  path: Resources/Tools/在线画图工具_diagrams_net.md
+  category: Resources/Tools
+  tags:
+  - 工具
+  - 画图
+  - 在线工具
+  created: '2026-03-22T00:00:00'
+  updated: '2026-03-22T00:00:00'
+  ai_summary: diagrams.net 是一款免费的在线画图工具，可用于绘制流程图、架构图等各种图表。
+- id: '2'
+  title: OpenClaw技术架构分析
+  path: Technology/AI/OpenClaw技术架构分析.md
+  category: Technology/AI
+  tags:
+  - 架构
+  - AI
+  - Agent
+  - Gateway
+  - TypeScript
+  - 多Agent协作
+  created: '2026-03-22T10:30:00'
+  updated: '2026-03-22T10:30:00'
+  ai_summary: OpenClaw是一个个人AI助手网关，运行在本地设备上，通过20+消息渠道提供AI对话能力。采用TypeScript+Node.js实现，核心包含Gateway服务器、多渠道消息适配、AI引擎(支持多模型Provider)、插件系统、浏览器控制、记忆系统等模块。支持多Agent协作，通过WebSocket+JSON-RPC协议通信，采用推送式(announce)机制和steer注入实现实时交互。会话管理基于文件系统持久化+LRU缓存，支持热重载。整体为单体架构，Agent嵌入Gateway进程运行。
+- id: '3'
+  title: 思源笔记 (SiYuan) - 本地优先的笔记系统
+  path: Resources/Tools/思源笔记_SiYuan_本地优先的笔记系统.md
+  category: Resources/Tools
+  tags:
+  - 笔记系统
+  - 开源
+  - 本地优先
+  - 工具
+  - 知识管理
+  created: '2026-03-22T19:30:00+08:00'
+  updated: '2026-03-22T19:30:00+08:00'
+  ai_summary: 思源笔记是一款本地优先的个人知识管理系统,支持双向链接、块级引用等现代笔记功能,完全开源且注重数据隐私和安全。
+- id: '4'
+  title: GitNexus - 项目知识图谱工具
+  path: Resources/Tools/GitNexus_项目知识图谱工具.md
+  category: Resources/Tools
+  tags:
+  - 知识图谱
+  - GitHub
+  - 项目分析
+  - 开源
+  - 工具
+  - 代码可视化
+  created: '2026-03-22T20:00:00+08:00'
+  updated: '2026-03-22T20:00:00+08:00'
+  ai_summary: GitNexus是一个GitHub项目，用于构建项目的知识图谱。它可以分析代码仓库的结构、依赖关系和知识组织，将项目信息以图谱形式呈现，帮助开发者更好地理解和导航复杂的代码库。
+- id: '5'
+  title: OpenClaw使用Gemini模型配置指南
+  path: Technology/AI/OpenClaw使用Gemini模型配置指南.md
+  category: Technology/AI
+  tags:
+  - OpenClaw
+  - Gemini
+  - VPN
+  - 证书配置
+  - AI
+  - 网络代理
+  created: '2026-03-22T20:15:00+08:00'
+  updated: '2026-03-22T20:15:00+08:00'
+  ai_summary: 在OpenClaw中使用Gemini模型需要科学上网工具。由于VPN软件使用中间人证书，需要在OpenClaw中配置信任或忽略SSL证书验证，才能正常访问Gemini
+    API服务。
+- id: '6'
+  title: 测试笔记_Skill功能验证
+  path: Inbox/测试笔记_Skill功能验证.md
+  category: Inbox
+  tags:
+  - 测试
+  - Skill
+  - 验证
+  - 功能测试
+  created: '2026-03-22T12:25:18'
+  updated: '2026-03-22T12:25:18'
+  ai_summary: 这是一个用于测试knowledge-base skill功能的测试笔记，用于验证skill的各项功能是否正常工作
+'# 更新时间': '2026-03-22T12:25:18'
