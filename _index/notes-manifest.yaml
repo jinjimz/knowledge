@@ -1,0 +1,14 @@
+# 笔记清单
+# 更新时间: 2026-03-22
+notes:
+  - id: "1"
+    title: "在线画图工具 diagrams.net"
+    path: "Resources/Tools/在线画图工具_diagrams_net.md"
+    category: "Resources/Tools"
+    tags:
+      - 工具
+      - 画图
+      - 在线工具
+    created: "2026-03-22T00:00:00"
+    updated: "2026-03-22T00:00:00"
+    ai_summary: "diagrams.net 是一款免费的在线画图工具，可用于绘制流程图、架构图等各种图表。"
