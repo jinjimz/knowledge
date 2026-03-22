@@ -1,0 +1,23 @@
+# 索引状态跟踪文件
+# 此文件记录最后一次索引更新对应的 Git commit ID
+# 用于支持增量更新，避免全量扫描所有笔记
+
+last_index_update:
+  commit_id: "ac62ab8a4821d7459f3689d26b0def213ba0edfd"
+  timestamp: "2026-03-22T15:04:55.257132"
+  notes_count: 6
+  tags_count: 25
+  categories_count: 3
+
+# 说明:
+# - commit_id: 最后一次更新索引时的 Git commit SHA
+# - timestamp: 更新时间 (ISO 8601 格式)
+# - notes_count: 当前笔记总数
+# - tags_count: 当前标签总数
+# - categories_count: 当前分类总数
+#
+# 使用方式:
+# 1. 手动更新索引时,脚本会读取此文件获取 last_commit_id
+# 2. 通过 git diff 找出自上次更新以来变更的笔记文件
+# 3. 只对变更的文件进行索引更新(增量更新)
+# 4. 更新完成后,将当前 commit ID 写入此文件

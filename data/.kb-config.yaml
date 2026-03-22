@@ -20,6 +20,11 @@ git:
   conflict_resolution: "manual"
   commit_message_template: "📝 {action}: {title}"
 
+# 索引更新配置
+index:
+  auto_update_on_add_note: false  # 记笔记时是否自动更新索引，设为false则需手动更新
+  incremental_update: true        # 支持增量更新，避免全量扫描
+
 # 分类配置
 categories:
   default: "Inbox"
