@@ -250,13 +250,64 @@ def update_indexes_incremental(data_path, changed_files):
     tags_data = load_yaml(os.path.join(index_dir, 'tags.yaml'))
     notes_data = load_yaml(os.path.join(index_dir, 'notes-manifest.yaml'))
     
+    if 'categories' not in categories_data:
+        categories_data['categories'] = {}
+    if 'tags' not in tags_data:
+        tags_data['tags'] = {}
+    if 'notes' not in notes_data:
+        notes_data['notes'] = []
+    
+    # 统计变更
+    added = 0
+    updated = 0
+    deleted = 0
+    
     for changed_file in changed_files:
         abs_path = os.path.join(data_path, changed_file)
+        normalized_path = changed_file.replace('\\', '/')
+        
+        # 检查文件是否存在于索引中
+        existing_note = None
+        existing_index = -1
+        for idx, note in enumerate(notes_data['notes']):
+            if note.get('path') == normalized_path:
+                existing_note = note
+                existing_index = idx
+                break
         
         # 如果文件被删除
         if not os.path.exists(abs_path):
-            print(f"🗑️  删除: {changed_file}")
-            # TODO: 从索引中移除
+            if existing_note:
+                print(f"🗑️  删除: {changed_file}")
+                
+                # 从笔记清单中移除
+                notes_data['notes'].pop(existing_index)
+                
+                # 从标签索引中移除
+                old_tags = existing_note.get('tags', [])
+                for tag in old_tags:
+                    if tag in tags_data['tags']:
+                        tags_data['tags'][tag] = [
+                            t for t in tags_data['tags'][tag]
+                            if t.get('path') != normalized_path
+                        ]
+                        # 如果标签下没有笔记了，删除标签
+                        if not tags_data['tags'][tag]:
+                            del tags_data['tags'][tag]
+                
+                # 更新分类计数
+                old_category = existing_note.get('category', 'Inbox')
+                parts = old_category.split('/')
+                if len(parts) == 1:
+                    if parts[0] in categories_data['categories']:
+                        if 'count' in categories_data['categories'][parts[0]]:
+                            categories_data['categories'][parts[0]]['count'] = max(0, categories_data['categories'][parts[0]]['count'] - 1)
+                elif len(parts) >= 2:
+                    if parts[0] in categories_data['categories'] and parts[1] in categories_data['categories'][parts[0]]:
+                        if 'count' in categories_data['categories'][parts[0]][parts[1]]:
+                            categories_data['categories'][parts[0]][parts[1]]['count'] = max(0, categories_data['categories'][parts[0]][parts[1]]['count'] - 1)
+                
+                deleted += 1
             continue
         
         # 读取文件
@@ -265,8 +316,126 @@ def update_indexes_incremental(data_path, changed_files):
             print(f"⚠️  跳过无效文件: {changed_file}")
             continue
         
-        print(f"📝 更新: {changed_file}")
-        # TODO: 更新索引条目
+        # 提取信息
+        title = frontmatter.get('title', changed_file)
+        category = frontmatter.get('category', 'Inbox')
+        tags = frontmatter.get('tags', [])
+        if isinstance(tags, str):
+            tags = [tags]
+        
+        if existing_note:
+            # 更新现有笔记
+            print(f"📝 更新: {changed_file}")
+            
+            # 从标签索引中移除旧标签
+            old_tags = existing_note.get('tags', [])
+            for tag in old_tags:
+                if tag in tags_data['tags']:
+                    tags_data['tags'][tag] = [
+                        t for t in tags_data['tags'][tag]
+                        if t.get('path') != normalized_path
+                    ]
+                    if not tags_data['tags'][tag]:
+                        del tags_data['tags'][tag]
+            
+            # 更新分类计数(如果分类变了)
+            old_category = existing_note.get('category', 'Inbox')
+            if old_category != category:
+                # 减少旧分类计数
+                old_parts = old_category.split('/')
+                if len(old_parts) == 1:
+                    if old_parts[0] in categories_data['categories']:
+                        if 'count' in categories_data['categories'][old_parts[0]]:
+                            categories_data['categories'][old_parts[0]]['count'] = max(0, categories_data['categories'][old_parts[0]]['count'] - 1)
+                elif len(old_parts) >= 2:
+                    if old_parts[0] in categories_data['categories'] and old_parts[1] in categories_data['categories'][old_parts[0]]:
+                        if 'count' in categories_data['categories'][old_parts[0]][old_parts[1]]:
+                            categories_data['categories'][old_parts[0]][old_parts[1]]['count'] = max(0, categories_data['categories'][old_parts[0]][old_parts[1]]['count'] - 1)
+                
+                # 增加新分类计数
+                new_parts = category.split('/')
+                if len(new_parts) == 1:
+                    if new_parts[0] not in categories_data['categories']:
+                        categories_data['categories'][new_parts[0]] = {}
+                    if 'count' not in categories_data['categories'][new_parts[0]]:
+                        categories_data['categories'][new_parts[0]]['count'] = 0
+                    categories_data['categories'][new_parts[0]]['count'] += 1
+                elif len(new_parts) >= 2:
+                    if new_parts[0] not in categories_data['categories']:
+                        categories_data['categories'][new_parts[0]] = {}
+                    if new_parts[1] not in categories_data['categories'][new_parts[0]]:
+                        categories_data['categories'][new_parts[0]][new_parts[1]] = {}
+                    if 'count' not in categories_data['categories'][new_parts[0]][new_parts[1]]:
+                        categories_data['categories'][new_parts[0]][new_parts[1]]['count'] = 0
+                    categories_data['categories'][new_parts[0]][new_parts[1]]['count'] += 1
+            
+            # 更新笔记清单
+            notes_data['notes'][existing_index].update({
+                'title': title,
+                'category': category,
+                'tags': tags,
+                'updated': frontmatter.get('updated', datetime.now().isoformat()),
+                'ai_summary': frontmatter.get('ai_summary', '')
+            })
+            
+            updated += 1
+        else:
+            # 添加新笔记
+            print(f"➕ 新增: {changed_file}")
+            
+            # 分配新ID
+            max_id = 0
+            for note in notes_data['notes']:
+                try:
+                    note_id = int(note.get('id', 0))
+                    if note_id > max_id:
+                        max_id = note_id
+                except:
+                    pass
+            new_id = max_id + 1
+            
+            # 添加到笔记清单
+            notes_data['notes'].append({
+                'id': str(new_id),
+                'title': title,
+                'path': normalized_path,
+                'category': category,
+                'tags': tags,
+                'created': frontmatter.get('created', ''),
+                'updated': frontmatter.get('updated', ''),
+                'ai_summary': frontmatter.get('ai_summary', '')
+            })
+            
+            # 更新分类计数
+            parts = category.split('/')
+            if len(parts) == 1:
+                if parts[0] not in categories_data['categories']:
+                    categories_data['categories'][parts[0]] = {}
+                if 'count' not in categories_data['categories'][parts[0]]:
+                    categories_data['categories'][parts[0]]['count'] = 0
+                categories_data['categories'][parts[0]]['count'] += 1
+            elif len(parts) >= 2:
+                if parts[0] not in categories_data['categories']:
+                    categories_data['categories'][parts[0]] = {}
+                if parts[1] not in categories_data['categories'][parts[0]]:
+                    categories_data['categories'][parts[0]][parts[1]] = {}
+                if 'count' not in categories_data['categories'][parts[0]][parts[1]]:
+                    categories_data['categories'][parts[0]][parts[1]]['count'] = 0
+                categories_data['categories'][parts[0]][parts[1]]['count'] += 1
+            
+            added += 1
+        
+        # 更新标签索引
+        for tag in tags:
+            if tag not in tags_data['tags']:
+                tags_data['tags'][tag] = []
+            # 检查是否已存在
+            exists = any(t.get('path') == normalized_path for t in tags_data['tags'][tag])
+            if not exists:
+                tags_data['tags'][tag].append({
+                    'path': normalized_path,
+                    'title': title
+                })
     
     # 更新时间戳
     update_time = datetime.now().isoformat()
@@ -279,7 +448,7 @@ def update_indexes_incremental(data_path, changed_files):
     save_yaml(os.path.join(index_dir, 'tags.yaml'), tags_data)
     save_yaml(os.path.join(index_dir, 'notes-manifest.yaml'), notes_data)
     
-    print("✅ 增量更新完成")
+    print(f"✅ 增量更新完成: ➕{added}篇新增 📝{updated}篇更新 🗑️{deleted}篇删除")
 
 def update_index_state(data_path, notes_count, tags_count, categories_count):
     """更新索引状态文件"""

@@ -49,6 +49,22 @@ notes:
   updated: '2026-03-22T19:30:00+08:00'
   ai_summary: 思源笔记是一款本地优先的个人知识管理系统,支持双向链接、块级引用等现代笔记功能,完全开源且注重数据隐私和安全。
 - id: '5'
+  title: Harness Engineering - 驾驭工程
+  path: Technology/AI/Harness_Engineering_驾驭工程概念.md
+  category: Technology/AI
+  tags:
+  - AI
+  - Agent
+  - 软件工程
+  - Harness Engineering
+  - 工程师角色
+  - OpenAI
+  created: '2026-03-22T22:30:00+08:00'
+  updated: '2026-03-22T22:30:00+08:00'
+  ai_summary: Harness Engineering 是 OpenAI 在 2026 年提出的面向 AI 时代的新型软件工程方法论。它标志着软件工程进入'驾驭时代'——工程师不再是代码的直接编写者,而是
+    AI Agent 的环境设计师、规则制定者和反馈建立者。这不是软件工程的终结,而是工程师价值的重新定义和升华,从低层次的代码实现提升到高层次的系统设计与控制。核心理念是'人类掌舵,AI
+    生成',通过构建约束环境、建立反馈循环和持续熵管理,让 AI Agent 在可控的轨道上高效工作。
+- id: '6'
   title: OpenClaw使用Gemini模型配置指南
   path: Technology/AI/OpenClaw使用Gemini模型配置指南.md
   category: Technology/AI
@@ -63,7 +79,7 @@ notes:
   updated: '2026-03-22T20:15:00+08:00'
   ai_summary: 在OpenClaw中使用Gemini模型需要科学上网工具。由于VPN软件使用中间人证书，需要在OpenClaw中配置信任或忽略SSL证书验证，才能正常访问Gemini
     API服务。
-- id: '6'
+- id: '7'
   title: OpenClaw技术架构分析
   path: Technology/AI/OpenClaw技术架构分析.md
   category: Technology/AI
@@ -77,4 +93,4 @@ notes:
   created: '2026-03-22T10:30:00'
   updated: '2026-03-22T10:30:00'
   ai_summary: OpenClaw是一个个人AI助手网关,运行在本地设备上,通过20+消息渠道提供AI对话能力。采用TypeScript+Node.js实现,核心包含Gateway服务器、多渠道消息适配、AI引擎(支持多模型Provider)、插件系统、浏览器控制、记忆系统等模块。支持多Agent协作,通过WebSocket+JSON-RPC协议通信,采用推送式(announce)机制和steer注入实现实时交互。会话管理基于文件系统持久化+LRU缓存,支持热重载。整体为单体架构,Agent嵌入Gateway进程运行。
-'# 更新时间': '2026-03-22T22:30:00'
+'# 更新时间': '2026-03-22T22:41:46.633520'

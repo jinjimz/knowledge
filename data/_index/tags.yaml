@@ -47,6 +47,30 @@ tags:
   知识管理:
   - path: Resources/Tools/思源笔记_SiYuan_本地优先的笔记系统.md
     title: 思源笔记 (SiYuan) - 本地优先的笔记系统
+  AI:
+  - path: Technology/AI/Harness_Engineering_驾驭工程概念.md
+    title: Harness Engineering - 驾驭工程
+  - path: Technology/AI/OpenClaw使用Gemini模型配置指南.md
+    title: OpenClaw使用Gemini模型配置指南
+  - path: Technology/AI/OpenClaw技术架构分析.md
+    title: OpenClaw技术架构分析
+  Agent:
+  - path: Technology/AI/Harness_Engineering_驾驭工程概念.md
+    title: Harness Engineering - 驾驭工程
+  - path: Technology/AI/OpenClaw技术架构分析.md
+    title: OpenClaw技术架构分析
+  软件工程:
+  - path: Technology/AI/Harness_Engineering_驾驭工程概念.md
+    title: Harness Engineering - 驾驭工程
+  Harness Engineering:
+  - path: Technology/AI/Harness_Engineering_驾驭工程概念.md
+    title: Harness Engineering - 驾驭工程
+  工程师角色:
+  - path: Technology/AI/Harness_Engineering_驾驭工程概念.md
+    title: Harness Engineering - 驾驭工程
+  OpenAI:
+  - path: Technology/AI/Harness_Engineering_驾驭工程概念.md
+    title: Harness Engineering - 驾驭工程
   OpenClaw:
   - path: Technology/AI/OpenClaw使用Gemini模型配置指南.md
     title: OpenClaw使用Gemini模型配置指南
@@ -59,20 +83,10 @@ tags:
   证书配置:
   - path: Technology/AI/OpenClaw使用Gemini模型配置指南.md
     title: OpenClaw使用Gemini模型配置指南
-  AI:
-  - path: Technology/AI/OpenClaw使用Gemini模型配置指南.md
-    title: OpenClaw使用Gemini模型配置指南
-  - path: Technology/AI/OpenClaw技术架构分析.md
-    title: OpenClaw技术架构分析
-  - path: Technology/AI/Harness_Engineering_驾驭工程概念.md
-    title: Harness Engineering - 驾驭工程
   网络代理:
   - path: Technology/AI/OpenClaw使用Gemini模型配置指南.md
     title: OpenClaw使用Gemini模型配置指南
   架构:
-  - path: Technology/AI/OpenClaw技术架构分析.md
-    title: OpenClaw技术架构分析
-  Agent:
   - path: Technology/AI/OpenClaw技术架构分析.md
     title: OpenClaw技术架构分析
   Gateway:
@@ -84,4 +98,4 @@ tags:
   多Agent协作:
   - path: Technology/AI/OpenClaw技术架构分析.md
     title: OpenClaw技术架构分析
-'# 更新时间': '2026-03-22T22:30:00'
+'# 更新时间': '2026-03-22T22:41:46.633520'

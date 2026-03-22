@@ -3,10 +3,10 @@
 # 用于支持增量更新，避免全量扫描所有笔记
 
 last_index_update:
-  commit_id: "ac62ab8a4821d7459f3689d26b0def213ba0edfd"
-  timestamp: "2026-03-22T15:04:55.257132"
-  notes_count: 6
-  tags_count: 25
+  commit_id: "c551209b5f3184005e614c4625806ee534e22530"
+  timestamp: "2026-03-22T22:41:46.648458"
+  notes_count: 7
+  tags_count: 29
   categories_count: 3
 
 # 说明:

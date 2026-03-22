@@ -292,8 +292,28 @@ pip3 install pyyaml
 运行更新索引脚本：
 ```bash
 cd $KB_ROOT
-bash .codebuddy/skills/knowledge-base/scripts/update-index.sh all data/
+bash .codebuddy/skills/knowledge-base/scripts/update-kb-index.sh -f
 ```
+
+### 笔记后需要更新索引
+
+**重要**: 记笔记时不会自动更新索引文件(为提升性能)。在记完笔记后,运行:
+
+```bash
+# 增量更新 (推荐,仅处理变更的笔记)
+bash .codebuddy/skills/knowledge-base/scripts/update-kb-index.sh -i
+
+# 或使用完整命令
+python3 .codebuddy/skills/knowledge-base/scripts/update-index.py --incremental
+
+# 查看索引状态
+bash .codebuddy/skills/knowledge-base/scripts/update-kb-index.sh -s
+```
+
+建议在以下场景更新索引:
+- 批量添加笔记后
+- Git推送前
+- 每周定期维护
 
 ### Git冲突
 
@@ -324,6 +344,13 @@ git push
 | 推荐度 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |
 
 ## 更新日志
+
+### 2026-03-22 v3 - 性能优化
+- ✅ **索引更新模式优化**：记笔记时不再自动更新索引,改为手动更新
+- ✅ **增量更新支持**：基于Git提交历史,仅处理变更的笔记文件
+- ✅ **完善update-index.py**：实现完整的增量更新逻辑(添加、修改、删除)
+- ✅ **便捷脚本**：新增 update-kb-index.sh 提供简化的命令接口
+- ✅ **索引状态跟踪**：通过 .index-state 文件记录最后更新的commit ID
 
 ### 2026-03-22 v2
 - ✅ **重构目录结构**：采用分离式结构，知识库数据位于 `data/` 目录
