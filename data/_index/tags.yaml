@@ -1,9 +1,11 @@
 # 标签索引
-# 更新时间: 2026-03-22T10:30:00
+# 更新时间: 2026-03-22T19:30:00
 tags:
   工具:
     - path: "Resources/Tools/在线画图工具_diagrams_net.md"
       title: "在线画图工具 diagrams.net"
+    - path: "Resources/Tools/思源笔记_SiYuan_本地优先的笔记系统.md"
+      title: "思源笔记 (SiYuan) - 本地优先的笔记系统"
   画图:
     - path: "Resources/Tools/在线画图工具_diagrams_net.md"
       title: "在线画图工具 diagrams.net"
@@ -28,3 +30,15 @@ tags:
   多Agent协作:
     - path: "Technology/AI/OpenClaw技术架构分析.md"
       title: "OpenClaw技术架构分析"
+  笔记系统:
+    - path: "Resources/Tools/思源笔记_SiYuan_本地优先的笔记系统.md"
+      title: "思源笔记 (SiYuan) - 本地优先的笔记系统"
+  开源:
+    - path: "Resources/Tools/思源笔记_SiYuan_本地优先的笔记系统.md"
+      title: "思源笔记 (SiYuan) - 本地优先的笔记系统"
+  本地优先:
+    - path: "Resources/Tools/思源笔记_SiYuan_本地优先的笔记系统.md"
+      title: "思源笔记 (SiYuan) - 本地优先的笔记系统"
+  知识管理:
+    - path: "Resources/Tools/思源笔记_SiYuan_本地优先的笔记系统.md"
+      title: "思源笔记 (SiYuan) - 本地优先的笔记系统"
