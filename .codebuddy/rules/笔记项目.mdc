@@ -1,0 +1,11 @@
+---
+description: 
+alwaysApply: true
+enabled: true
+updatedAt: 2026-03-22T02:57:35.822Z
+provider: 
+---
+
+1. knowledge是使用knowledge-base这个skill管理的知识库，不需直接修改知识库的目录和内容，务必通过skill写入和管理
+2. 没有明确指出搜索或查询knowledge目录，不要读取该目录内容，该目录内容默认与本项目无关
+3. 本项目是用于知识搜索，内容广泛，目的是搜索和总结知识，最后通过明确说记笔记才触发skill写入到知识库
