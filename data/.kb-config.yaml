@@ -15,7 +15,7 @@ skill:
 git:
   remote_url: "https://github.com/jinjimz/knowledge"
   default_branch: "main"
-  push_threshold: 10
+  push_threshold: 1
   auto_pull_before_push: true
   conflict_resolution: "manual"
   commit_message_template: "📝 {action}: {title}"
