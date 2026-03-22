@@ -64,6 +64,8 @@ tags:
     title: OpenClaw使用Gemini模型配置指南
   - path: Technology/AI/OpenClaw技术架构分析.md
     title: OpenClaw技术架构分析
+  - path: Technology/AI/Harness_Engineering_驾驭工程概念.md
+    title: Harness Engineering - 驾驭工程
   网络代理:
   - path: Technology/AI/OpenClaw使用Gemini模型配置指南.md
     title: OpenClaw使用Gemini模型配置指南
@@ -82,4 +84,4 @@ tags:
   多Agent协作:
   - path: Technology/AI/OpenClaw技术架构分析.md
     title: OpenClaw技术架构分析
-'# 更新时间': '2026-03-22T15:04:55.241560'
+'# 更新时间': '2026-03-22T22:30:00'
