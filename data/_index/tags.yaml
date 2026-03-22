@@ -6,6 +6,8 @@ tags:
       title: "在线画图工具 diagrams.net"
     - path: "Resources/Tools/思源笔记_SiYuan_本地优先的笔记系统.md"
       title: "思源笔记 (SiYuan) - 本地优先的笔记系统"
+    - path: "Resources/Tools/GitNexus_项目知识图谱工具.md"
+      title: "GitNexus - 项目知识图谱工具"
   画图:
     - path: "Resources/Tools/在线画图工具_diagrams_net.md"
       title: "在线画图工具 diagrams.net"

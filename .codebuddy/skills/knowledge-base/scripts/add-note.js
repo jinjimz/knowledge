@@ -10,7 +10,9 @@ const path = require('path');
 const yaml = require('js-yaml');
 
 // 配置
-const KB_ROOT = path.resolve(__dirname, '../../../knowledge');
+// 从 .codebuddy/skills/knowledge-base/scripts/ 向上4级到达项目根目录
+const WORKSPACE_ROOT = path.resolve(__dirname, '../../../..');
+const KB_ROOT = path.join(WORKSPACE_ROOT, 'data');
 const INDEX_DIR = path.join(KB_ROOT, '_index');
 const TEMPLATE_FILE = path.join(KB_ROOT, '_templates/default.md');
 
