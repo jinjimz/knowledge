@@ -1,0 +1,28 @@
+# 笔记清单
+# 更新时间: 2026-03-22T10:30:00
+notes:
+  - id: "1"
+    title: "在线画图工具 diagrams.net"
+    path: "Resources/Tools/在线画图工具_diagrams_net.md"
+    category: "Resources/Tools"
+    tags:
+      - 工具
+      - 画图
+      - 在线工具
+    created: "2026-03-22T00:00:00"
+    updated: "2026-03-22T00:00:00"
+    ai_summary: "diagrams.net 是一款免费的在线画图工具，可用于绘制流程图、架构图等各种图表。"
+  - id: "2"
+    title: "OpenClaw技术架构分析"
+    path: "Technology/AI/OpenClaw技术架构分析.md"
+    category: "Technology/AI"
+    tags:
+      - 架构
+      - AI
+      - Agent
+      - Gateway
+      - TypeScript
+      - 多Agent协作
+    created: "2026-03-22T10:30:00"
+    updated: "2026-03-22T10:30:00"
+    ai_summary: "OpenClaw是一个个人AI助手网关，运行在本地设备上，通过20+消息渠道提供AI对话能力。采用TypeScript+Node.js实现，核心包含Gateway服务器、多渠道消息适配、AI引擎(支持多模型Provider)、插件系统、浏览器控制、记忆系统等模块。支持多Agent协作，通过WebSocket+JSON-RPC协议通信，采用推送式(announce)机制和steer注入实现实时交互。会话管理基于文件系统持久化+LRU缓存，支持热重载。整体为单体架构，Agent嵌入Gateway进程运行。"

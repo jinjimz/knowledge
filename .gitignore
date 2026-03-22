@@ -1,0 +1,8 @@
+.DS_Store
+*.swp
+*.swo
+*~
+./data/.obsidian/workspace.json
+./data/.obsidian/workspace-mobile.json
+.codebuddy
+tmp

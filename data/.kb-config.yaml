@@ -1,0 +1,41 @@
+# 知识库基本信息
+knowledge_base:
+  name: "我的知识库"
+  version: "1.0.0"
+  created_at: "2026-03-22"
+
+# Skill 配置（AI 工具使用）
+skill:
+  search_paths:
+    - "."
+    - "~/knowledge"
+  language: "zh-CN"
+
+# Git 同步配置
+git:
+  remote_url: "https://github.com/jinjimz/knowledge"
+  default_branch: "main"
+  push_threshold: 10
+  local_commit_count: 0
+  auto_pull_before_push: true
+  conflict_resolution: "manual"
+  commit_message_template: "📝 {action}: {title}"
+
+# 分类配置
+categories:
+  default: "Inbox"
+  aliases:
+    技术: "Technology"
+    编程: "Technology/Programming"
+    工具: "Resources/Tools"
+    学习: "Learning"
+    读书: "Learning/Books"
+    工作: "Work"
+    生活: "Life"
+    想法: "Ideas"
+    资源: "Resources"
+
+# 附件配置
+attachments:
+  large_file_threshold: 1048576
+  date_folder_format: "YYYY-MM-DD"
