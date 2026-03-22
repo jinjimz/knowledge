@@ -51,6 +51,8 @@ tags:
   测试:
   - path: Inbox/测试笔记_Skill功能验证.md
     title: 测试笔记_Skill功能验证
+  - path: Inbox/测试自动推送功能.md
+    title: 测试自动推送功能
   Skill:
   - path: Inbox/测试笔记_Skill功能验证.md
     title: 测试笔记_Skill功能验证
@@ -60,4 +62,10 @@ tags:
   功能测试:
   - path: Inbox/测试笔记_Skill功能验证.md
     title: 测试笔记_Skill功能验证
-'# 更新时间': '2026-03-22T12:25:18'
+  自动推送:
+  - path: Inbox/测试自动推送功能.md
+    title: 测试自动推送功能
+  Bug修复:
+  - path: Inbox/测试自动推送功能.md
+    title: 测试自动推送功能
+'# 更新时间': '2026-03-22T12:27:43'
