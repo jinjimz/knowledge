@@ -13,6 +13,7 @@
 - 🔄 **Git 版本控制** - 所有笔记自动版本管理，支持历史回溯
 - 📊 **增量索引更新** - 基于 Git diff 的增量更新，高效处理大量笔记
 - 🤖 **AI 辅助创建** - 通过 CodeBuddy Skill 智能生成笔记和摘要
+- 🧠 **AI 工具兼容** - 遵循 `.cursorrules` 规范，支持主流 AI 编码助手
 - 💎 **Obsidian 兼容** - 完全兼容 Obsidian，支持双向链接和图谱视图
 - 🔒 **本地优先** - 数据完全存储在本地，可选同步到 GitHub
 - 🚀 **自动化推送** - 达到阈值自动推送到远程仓库
@@ -478,6 +479,7 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 - [Obsidian 官网](https://obsidian.md/)
 - [CodeBuddy 文档](https://www.codebuddy.ai/docs/zh/)
+- [Cursor AI Rules](https://docs.cursor.com/context/rules-for-ai)
 - [Git 文档](https://git-scm.com/doc)
 - [YAML 规范](https://yaml.org/)
 

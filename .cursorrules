@@ -1,0 +1,129 @@
+# AI Coding Assistant Rules for Knowledge Base Project
+
+## 项目概述
+
+本项目是一个基于 Git 的个人知识管理系统，使用 `knowledge-base` Skill 进行管理。
+
+## 核心规则
+
+### 1. 知识库管理约束
+- **knowledge** 目录是使用 `knowledge-base` Skill 管理的知识库
+- **禁止直接修改** `data/` 目录下的知识库内容和结构
+- **必须通过 Skill** 进行所有知识库的写入和管理操作
+- 除非用户明确要求搜索或查询 `data/` 目录，否则不要读取该目录内容
+
+### 2. 项目定位
+- 本项目用于**知识搜索、总结和管理**
+- 内容范围广泛，涉及多个领域
+- 只有在用户**明确说"记笔记"或"保存笔记"**时，才触发 Skill 写入到知识库
+- 不要主动将搜索结果或总结自动保存为笔记
+
+### 3. 产出物管理
+- 所有项目的**临时产出物**必须放到 `tmp/` 目录下
+- 包括但不限于：临时文档、草稿、测试文件、脚本输出等
+- 不要在项目根目录创建临时文件
+
+### 4. Skill 规范
+- `knowledge-base` Skill 已按标准 **Claude Code Skill 规范**调整
+- 使用 `SKILL.md`（带 YAML frontmatter）作为定义文件
+- **不再使用** `skill.json`
+- 完全兼容 Claude Code 和 CodeBuddy
+
+### 5. 知识库配置
+- 配置文件：`data/.kb-config.yaml`
+- 索引更新策略：默认为手动更新（`auto_update_on_add_note: false`）
+- Git 自动推送阈值：1 个未推送提交时触发
+
+### 6. 工作流程
+当用户请求记笔记时：
+1. ✅ 确认用户明确表达了"记笔记"的意图
+2. ✅ 使用 `knowledge-base` Skill 处理
+3. ✅ Skill 会自动处理：摘要生成、标签推荐、Git 提交等
+4. ❌ 不要直接写入 `data/` 目录
+5. ❌ 不要手动修改索引文件
+
+## 目录说明
+
+```
+knowledge/
+├── .cursorrules          # 本规则文件（通用 AI 助手规则）
+├── .codebuddy/
+│   └── skills/knowledge-base/  # 知识库管理 Skill
+├── data/                 # 📁 知识库数据目录（禁止直接修改）
+│   ├── .kb-config.yaml  # 知识库配置
+│   ├── _index/          # 索引文件（自动生成）
+│   ├── _templates/      # 笔记模板
+│   └── [分类目录]/      # 笔记分类
+└── tmp/                 # 📦 临时产出物目录
+```
+
+## 常见场景
+
+### ✅ 正确做法
+
+**场景 1: 用户说"记笔记"**
+```
+用户: "记笔记：今天学习了 Python 装饰器"
+助手: [调用 knowledge-base Skill]
+```
+
+**场景 2: 用户请求搜索和总结**
+```
+用户: "搜索 Python 装饰器相关资料并总结"
+助手: [搜索、总结、将结果保存到 tmp/summary-YYYYMMDD.md]
+```
+
+**场景 3: 临时文件处理**
+```
+助手: [将所有临时产出保存到 tmp/ 目录]
+```
+
+### ❌ 错误做法
+
+**❌ 不要直接修改 data/ 目录**
+```
+# 错误
+write_to_file(filePath="/Users/coriase/work/knowledge/data/Technology/note.md", ...)
+```
+
+**❌ 不要在未确认的情况下自动记笔记**
+```
+用户: "搜索 AI 相关资料"
+助手: [❌ 不要自动调用 Skill 保存笔记]
+```
+
+**❌ 不要在项目根目录创建临时文件**
+```
+# 错误
+write_to_file(filePath="/Users/coriase/work/knowledge/temp.md", ...)
+
+# 正确
+write_to_file(filePath="/Users/coriase/work/knowledge/tmp/temp.md", ...)
+```
+
+## 触发词识别
+
+### 记笔记触发词（需调用 Skill）
+- "记笔记"
+- "保存笔记"
+- "添加笔记"
+- "创建笔记"
+- "写入知识库"
+
+### 搜索/总结触发词（不自动记笔记）
+- "搜索"
+- "查找"
+- "总结"
+- "分析"
+- "研究"
+
+## 兼容性说明
+
+本规则文件遵循以下命名约定，确保多 AI 工具兼容：
+- `.cursorrules` - Cursor AI
+- `.clinerules` - Cline
+- `.windsurfrules` - Windsurf
+- `.roomarules` - Rooma
+- `.aicoderrules` - AI Coder
+
+其他 AI 编码助手通常也会识别这些标准规则文件。
