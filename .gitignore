@@ -2,8 +2,7 @@
 *.swp
 *.swo
 *~
-./data/.obsidian/workspace.json
-./data/.obsidian/workspace-mobile.json
+./data/.obsidian
 
 # CodeBuddy - 只忽略工作记忆，保留 skills
 .codebuddy/memory/
