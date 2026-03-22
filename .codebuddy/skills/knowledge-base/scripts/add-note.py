@@ -17,13 +17,42 @@ except ImportError:
     print("❌ 需要安装PyYAML: pip3 install pyyaml")
     sys.exit(1)
 
-# 配置
+# 配置 - 自动探测知识库路径
 SCRIPT_DIR = Path(__file__).parent
-# 从 .codebuddy/skills/knowledge-base/scripts/ 向上4级到达项目根目录
-WORKSPACE_ROOT = (SCRIPT_DIR / '../../../..').resolve()
-KB_ROOT = WORKSPACE_ROOT / 'data'
+
+def find_kb_root():
+    """自动探测知识库数据目录"""
+    # 1. 环境变量
+    env_path = os.environ.get('KB_DATA_PATH')
+    if env_path and Path(env_path, '.kb-config.yaml').exists():
+        return Path(env_path).resolve()
+    
+    # 2. 从脚本位置向上探测（最多6级）
+    probe = SCRIPT_DIR
+    for _ in range(6):
+        probe = probe.parent
+        candidate = probe / 'data'
+        if (candidate / '.kb-config.yaml').exists():
+            return candidate.resolve()
+    
+    # 3. 家目录默认位置
+    home_kb = Path.home() / 'knowledge' / 'data'
+    if (home_kb / '.kb-config.yaml').exists():
+        return home_kb
+
+    return None
+
+KB_ROOT = find_kb_root()
+if not KB_ROOT:
+    print("❌ 找不到知识库数据目录")
+    print("提示: 请确保知识库已初始化（包含 .kb-config.yaml 文件）")
+    print("     或设置环境变量: export KB_DATA_PATH=/path/to/knowledge/data")
+    sys.exit(1)
+
 INDEX_DIR = KB_ROOT / '_index'
 TEMPLATE_FILE = KB_ROOT / '_templates' / 'default.md'
+
+print(f'📍 知识库路径: {KB_ROOT}')
 
 def get_timestamp():
     """获取当前时间戳"""
@@ -232,10 +261,50 @@ ai_summary: "{{ai_summary}}"
         try:
             subprocess.run(['git', 'add', str(relative_path), '_index/'], 
                           cwd=KB_ROOT, check=True, capture_output=True)
-            commit_msg = f"添加笔记: {title}\n\n- 分类: {category}\n- 标签: {', '.join(tags)}"
+            commit_msg = f"📝 新增笔记: {title}\n\n- 分类: {category}\n- 标签: {', '.join(tags)}"
             subprocess.run(['git', 'commit', '-m', commit_msg], 
                           cwd=KB_ROOT, check=True, capture_output=True)
             print('✓ Git提交成功')
+            
+            # 7. 检查是否需要自动推送
+            try:
+                # 读取配置文件获取push_threshold
+                config_file = KB_ROOT / '.kb-config.yaml'
+                config_data = read_yaml_file(config_file)
+                push_threshold = config_data.get('git', {}).get('push_threshold', 10)
+                auto_pull = config_data.get('git', {}).get('auto_pull_before_push', True)
+                
+                # 获取未推送的提交数
+                result = subprocess.run(['git', 'log', '@{u}..', '--oneline'], 
+                                      cwd=KB_ROOT, capture_output=True, text=True)
+                unpushed_count = len([line for line in result.stdout.strip().split('\n') if line])
+                
+                print(f'📊 当前进度: {unpushed_count} 个未推送提交 (阈值: {push_threshold})')
+                
+                if unpushed_count >= push_threshold:
+                    print(f'📤 达到推送阈值，开始推送到远程...')
+                    
+                    # 先拉取（如果配置了auto_pull_before_push）
+                    if auto_pull:
+                        try:
+                            subprocess.run(['git', 'pull', '--rebase'], 
+                                         cwd=KB_ROOT, check=True, capture_output=True)
+                            print('✓ 远程更新已拉取')
+                        except subprocess.CalledProcessError:
+                            print('⚠️ 拉取远程更新失败（可能是新仓库或无远程）')
+                    
+                    # 推送
+                    try:
+                        subprocess.run(['git', 'push'], 
+                                     cwd=KB_ROOT, check=True, capture_output=True)
+                        print('✓ 推送成功!')
+                    except subprocess.CalledProcessError as e:
+                        print(f'⚠️ 推送失败: {e.stderr.decode() if e.stderr else str(e)}')
+                        print(f'   提示: 可以稍后手动运行 "git push" 推送')
+                        
+            except Exception as e:
+                print(f'⚠️ 自动推送检查失败: {e}')
+                
         except subprocess.CalledProcessError as e:
             print(f'⚠ Git提交失败: {e}')
         

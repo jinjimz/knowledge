@@ -241,7 +241,7 @@ bash scripts/update-index.sh categories data/
 ### Processing
 1. Parse: Title="思源笔记 (SiYuan)", Category="Resources/Tools", Tags=["笔记系统","开源","本地优先","工具","知识管理"]
 2. Generate content using template
-3. Create file: `data/Resources/Tools/思源笔记_SiYuan_本地优先的笔记系统.md`
+3. Create file: `$KB_DATA_PATH/Resources/Tools/思源笔记_SiYuan_本地优先的笔记系统.md`
 4. Update all 3 index files
 5. Git commit: "📝 新增笔记: 思源笔记 (SiYuan) - 本地优先的笔记系统"
 6. Check unpushed commits: If >= 10, auto push

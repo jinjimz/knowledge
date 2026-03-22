@@ -1,16 +1,21 @@
 #!/bin/bash
 # 初始化知识库
-# 用法: init-kb.sh <路径> [远程地址]
+# 用法: init-kb.sh [路径] [远程地址]
 # 
-# 注意：
-#   - <路径> 应指向知识库数据目录（通常是 <workspace>/data/）
-#   - 如果要初始化整个项目，请传入 <workspace>/data/ 作为路径
-#   - 例如：init-kb.sh /Users/coriase/work/knowledge/data
+# 参数说明：
+#   - [路径] 可选，默认使用 $KB_DATA_PATH 环境变量或 ~/knowledge/data
+#   - [远程地址] 可选，默认使用 $KB_REMOTE_URL 环境变量
+# 
+# 示例：
+#   - init-kb.sh                                    # 使用默认路径
+#   - init-kb.sh ~/my-notes/data                    # 指定路径
+#   - init-kb.sh ~/my-notes/data https://github.com/user/repo  # 指定路径和远程地址
 
 set -e
 
-KB_PATH="${1:-$HOME/knowledge/data}"
-REMOTE_URL="${2:-https://github.com/jinjimz/knowledge}"
+# 优先使用环境变量，然后是命令行参数，最后是默认值
+KB_PATH="${1:-${KB_DATA_PATH:-$HOME/knowledge/data}}"
+REMOTE_URL="${2:-${KB_REMOTE_URL:-}}"
 
 echo "📚 初始化知识库: $KB_PATH"
 

@@ -5,11 +5,48 @@
 
 set -e
 
-# 配置
+# 配置 - 自动探测知识库路径
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-KB_ROOT="$(cd "$SCRIPT_DIR/../../../knowledge" && pwd)"
+
+# 探测知识库路径（优先级从高到低）
+find_kb_root() {
+    # 1. 环境变量
+    if [ -n "$KB_DATA_PATH" ] && [ -f "$KB_DATA_PATH/.kb-config.yaml" ]; then
+        echo "$KB_DATA_PATH"
+        return 0
+    fi
+    
+    # 2. 从脚本位置向上探测（最多6级）
+    local probe="$SCRIPT_DIR"
+    for i in $(seq 1 6); do
+        probe="$(dirname "$probe")"
+        if [ -f "$probe/data/.kb-config.yaml" ]; then
+            echo "$probe/data"
+            return 0
+        fi
+    done
+    
+    # 3. 家目录默认位置
+    if [ -f "$HOME/knowledge/data/.kb-config.yaml" ]; then
+        echo "$HOME/knowledge/data"
+        return 0
+    fi
+    
+    return 1
+}
+
+KB_ROOT="$(find_kb_root)"
+if [ -z "$KB_ROOT" ]; then
+    echo "❌ 找不到知识库数据目录"
+    echo "提示: 请确保知识库已初始化（包含 .kb-config.yaml 文件）"
+    echo "     或设置环境变量: export KB_DATA_PATH=/path/to/knowledge/data"
+    exit 1
+fi
+
 INDEX_DIR="$KB_ROOT/_index"
 TEMPLATE_FILE="$KB_ROOT/_templates/default.md"
+
+echo "📍 知识库路径: $KB_ROOT"
 
 # 参数检查
 if [ $# -lt 4 ]; then
@@ -143,13 +180,52 @@ cd "$KB_ROOT"
 if git rev-parse --git-dir > /dev/null 2>&1; then
     git add "$RELATIVE_PATH" _index/ 2>/dev/null || true
     
-    COMMIT_MSG="添加笔记: $TITLE
+    COMMIT_MSG="📝 新增笔记: $TITLE
 
 - 分类: $CATEGORY
 - 标签: $TAGS_STR"
     
     if git commit -m "$COMMIT_MSG" > /dev/null 2>&1; then
         echo "✓ Git提交成功"
+        
+        # 5. 检查是否需要自动推送
+        # 读取配置文件获取push_threshold
+        get_config_value() {
+            local key="$1"
+            grep "$key:" "$KB_ROOT/.kb-config.yaml" | head -1 | awk -F': ' '{print $2}' | tr -d ' "'
+        }
+        
+        PUSH_THRESHOLD=$(get_config_value "push_threshold")
+        AUTO_PULL=$(get_config_value "auto_pull_before_push")
+        
+        PUSH_THRESHOLD=${PUSH_THRESHOLD:-10}
+        AUTO_PULL=${AUTO_PULL:-true}
+        
+        # 获取未推送的提交数
+        UNPUSHED_COUNT=$(git log @{u}.. --oneline 2>/dev/null | wc -l | tr -d ' ')
+        
+        echo "📊 当前进度: $UNPUSHED_COUNT 个未推送提交 (阈值: $PUSH_THRESHOLD)"
+        
+        if [ "$UNPUSHED_COUNT" -ge "$PUSH_THRESHOLD" ]; then
+            echo "📤 达到推送阈值，开始推送到远程..."
+            
+            # 先拉取（如果配置了auto_pull_before_push）
+            if [ "$AUTO_PULL" = "true" ]; then
+                if git pull --rebase > /dev/null 2>&1; then
+                    echo "✓ 远程更新已拉取"
+                else
+                    echo "⚠️ 拉取远程更新失败（可能是新仓库或无远程）"
+                fi
+            fi
+            
+            # 推送
+            if git push > /dev/null 2>&1; then
+                echo "✓ 推送成功!"
+            else
+                echo "⚠️ 推送失败"
+                echo "   提示: 可以稍后手动运行 'git push' 推送"
+            fi
+        fi
     else
         echo "⚠ Git提交跳过（可能没有变更）"
     fi
