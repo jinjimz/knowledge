@@ -44,3 +44,9 @@ tags:
   知识管理:
     - path: "Resources/Tools/思源笔记_SiYuan_本地优先的笔记系统.md"
       title: "思源笔记 (SiYuan) - 本地优先的笔记系统"
+  Gemini:
+    - path: "Technology/AI/OpenClaw使用Gemini模型配置指南.md"
+      title: "OpenClaw使用Gemini模型配置指南"
+  证书配置:
+    - path: "Technology/AI/OpenClaw使用Gemini模型配置指南.md"
+      title: "OpenClaw使用Gemini模型配置指南"

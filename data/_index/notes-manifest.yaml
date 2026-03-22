@@ -53,3 +53,17 @@ notes:
     created: "2026-03-22T20:00:00+08:00"
     updated: "2026-03-22T20:00:00+08:00"
     ai_summary: "GitNexus是一个GitHub项目，用于构建项目的知识图谱。它可以分析代码仓库的结构、依赖关系和知识组织，将项目信息以图谱形式呈现，帮助开发者更好地理解和导航复杂的代码库。"
+  - id: "5"
+    title: "OpenClaw使用Gemini模型配置指南"
+    path: "Technology/AI/OpenClaw使用Gemini模型配置指南.md"
+    category: "Technology/AI"
+    tags:
+      - OpenClaw
+      - Gemini
+      - VPN
+      - 证书配置
+      - AI
+      - 网络代理
+    created: "2026-03-22T20:15:00+08:00"
+    updated: "2026-03-22T20:15:00+08:00"
+    ai_summary: "在OpenClaw中使用Gemini模型需要科学上网工具。由于VPN软件使用中间人证书，需要在OpenClaw中配置信任或忽略SSL证书验证，才能正常访问Gemini API服务。"
