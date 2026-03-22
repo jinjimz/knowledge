@@ -7,14 +7,14 @@
 ### 用户输入
 
 ```
-记笔记：我通过codebuddy分析openclaw源码生成的openclaw架构文档：/Users/coriase/work/obsidian/tech/tech/架构.md
+记笔记：我通过codebuddy分析openclaw源码生成的openclaw架构文档：/path/to/your/notes/架构.md
 ```
 
 ### AI处理流程
 
 1. **读取源文件**
    ```python
-   read_file("/Users/coriase/work/obsidian/tech/tech/架构.md")
+   read_file("/path/to/your/notes/架构.md")
    ```
 
 2. **分析内容生成元数据**
@@ -26,12 +26,12 @@
 3. **调用脚本创建笔记**
    ```python
    execute_command(
-       command='python3 /Users/coriase/work/knowledge/.codebuddy/skills/knowledge-base/scripts/add-note.py '
+       command='python3 .codebuddy/skills/knowledge-base/scripts/add-note.py '
                '"OpenClaw技术架构分析" '
                '"OpenClaw是个人AI助手网关，采用TypeScript+Node.js..." '
                '"架构,AI,Agent,Gateway,TypeScript,多Agent协作" '
                '"Technology/AI" '
-               '"/Users/coriase/work/obsidian/tech/tech/架构.md"'
+               '"/path/to/your/notes/架构.md"'
    )
    ```
 
@@ -51,18 +51,18 @@ title = "OpenClaw技术架构分析"
 ai_summary = "OpenClaw是个人AI助手网关，运行在本地设备上，通过20+消息渠道提供AI对话能力..."
 tags = "架构,AI,Agent,Gateway,TypeScript,多Agent协作"
 category = "Technology/AI"
-source_file = "/Users/coriase/work/obsidian/tech/tech/架构.md"
+source_file = "/path/to/source/架构.md"
 
 # 调用脚本
 result = subprocess.run([
     'python3',
-    '/Users/coriase/work/knowledge/.codebuddy/skills/knowledge-base/scripts/add-note.py',
+    '.codebuddy/skills/knowledge-base/scripts/add-note.py',
     title,
     ai_summary,
     tags,
     category,
     source_file
-], cwd='/Users/coriase/work/knowledge', capture_output=True, text=True)
+], capture_output=True, text=True)
 
 print(result.stdout)
 ```
@@ -327,7 +327,7 @@ def handle_note_request(user_message):
     # 4. 调用脚本
     cmd = [
         'python3',
-        '/Users/coriase/work/knowledge/.codebuddy/skills/knowledge-base/scripts/add-note.py',
+        '.codebuddy/skills/knowledge-base/scripts/add-note.py',
         title,
         ai_summary,
         ','.join(tags),

@@ -18,11 +18,16 @@ Use this skill when the user requests:
 
 ## Configuration
 
-- **Base path**: `/Users/coriase/work/knowledge/data/`
-- **Config**: `data/.kb-config.yaml` (for push threshold and other settings)
-- **Indexes**: `data/_index/` (categories.yaml, tags.yaml, notes-manifest.yaml)
-- **Templates**: `data/_templates/default.md`
-- **Attachments**: `data/_attachments/`
+- **Base path**: Auto-detected (see Path Detection below)
+- **Config**: `$KB_DATA_PATH/.kb-config.yaml` (for push threshold and other settings)
+- **Indexes**: `$KB_DATA_PATH/_index/` (categories.yaml, tags.yaml, notes-manifest.yaml)
+- **Templates**: `$KB_DATA_PATH/_templates/default.md`
+- **Attachments**: `$KB_DATA_PATH/_attachments/`
+
+**Path Detection** (priority order):
+1. Environment variable: `$KB_DATA_PATH`
+2. Auto-probe from script location (up to 6 levels) for `data/.kb-config.yaml`
+3. Default: `$HOME/knowledge/data`
 
 **Note**: Local commit count is tracked via Git history (`git log @{u}..`), not in config file.
 
@@ -116,7 +121,7 @@ notes:
 ### Step 6: Git Local Commit
 Execute in data directory:
 ```bash
-cd /Users/coriase/work/knowledge/data
+cd $KB_DATA_PATH
 git add -A
 git commit -m "📝 新增笔记: [Note Title]"
 ```
@@ -124,11 +129,11 @@ git commit -m "📝 新增笔记: [Note Title]"
 ### Step 7: Check Push Threshold and Sync
 Query local unpushed commits count:
 ```bash
-cd /Users/coriase/work/knowledge/data
+cd $KB_DATA_PATH
 LOCAL_COMMITS=$(git log @{u}.. --oneline 2>/dev/null | wc -l | tr -d ' ')
 ```
 
-Read push threshold from `data/.kb-config.yaml` (default: 10).
+Read push threshold from `$KB_DATA_PATH/.kb-config.yaml` (default: 10).
 
 If `LOCAL_COMMITS >= push_threshold`:
 1. Execute `git pull --rebase`
@@ -153,7 +158,15 @@ Features:
 - Automatically creates note file
 - Updates all three index files
 - Commits to Git
+- **Auto-push when threshold reached** (reads from `.kb-config.yaml`)
 - Supports source file copying
+
+**Available scripts:**
+- `add-note.py` (Python) - Full-featured, recommended
+- `add-note.js` (Node.js) - Requires `js-yaml` package
+- `add-note-simple.sh` (Bash) - Lightweight, no index update
+
+All scripts now support automatic push when `push_threshold` is reached.
 
 ## Important Guidelines
 
@@ -213,13 +226,13 @@ Features:
 
 ### Issue 1: Index File Format Error
 ```bash
-cp data/_index/tags.yaml data/_index/tags.yaml.bak
-bash scripts/update-index.sh all data/
+cp $KB_DATA_PATH/_index/tags.yaml $KB_DATA_PATH/_index/tags.yaml.bak
+bash scripts/update-index.sh all $KB_DATA_PATH/
 ```
 
 ### Issue 2: Git Conflict
 ```bash
-cd /Users/coriase/work/knowledge/data
+cd $KB_DATA_PATH
 git pull --rebase
 git add .
 git rebase --continue
@@ -228,7 +241,7 @@ git push
 
 ### Issue 3: Incorrect Category Count
 ```bash
-bash scripts/update-index.sh categories data/
+bash scripts/update-index.sh categories $KB_DATA_PATH/
 ```
 
 ## Example: Complete Flow
