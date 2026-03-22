@@ -19,10 +19,12 @@ Use this skill when the user requests:
 ## Configuration
 
 - **Base path**: `/Users/coriase/work/knowledge/data/`
-- **Config**: `data/.kb-config.yaml`
+- **Config**: `data/.kb-config.yaml` (for push threshold and other settings)
 - **Indexes**: `data/_index/` (categories.yaml, tags.yaml, notes-manifest.yaml)
 - **Templates**: `data/_templates/default.md`
 - **Attachments**: `data/_attachments/`
+
+**Note**: Local commit count is tracked via Git history (`git log @{u}..`), not in config file.
 
 ## Workflow: Creating a Note
 
@@ -119,18 +121,21 @@ git add -A
 git commit -m "📝 新增笔记: [Note Title]"
 ```
 
-### Step 7: Update Config and Check Push Threshold
-Update `data/.kb-config.yaml`:
-```yaml
-git:
-  local_commit_count: N  # Increment by 1
-  push_threshold: 10
+### Step 7: Check Push Threshold and Sync
+Query local unpushed commits count:
+```bash
+cd /Users/coriase/work/knowledge/data
+LOCAL_COMMITS=$(git log @{u}.. --oneline 2>/dev/null | wc -l | tr -d ' ')
 ```
 
-If `local_commit_count >= 10`:
+Read push threshold from `data/.kb-config.yaml` (default: 10).
+
+If `LOCAL_COMMITS >= push_threshold`:
 1. Execute `git pull --rebase`
 2. Execute `git push`
-3. Reset `local_commit_count` to 0
+3. Report sync status
+
+**Note**: No need to update `.kb-config.yaml` for commit count tracking. Git history is the source of truth.
 
 ## Using Scripts (Optional)
 
@@ -239,11 +244,11 @@ bash scripts/update-index.sh categories data/
 3. Create file: `data/Resources/Tools/思源笔记_SiYuan_本地优先的笔记系统.md`
 4. Update all 3 index files
 5. Git commit: "📝 新增笔记: 思源笔记 (SiYuan) - 本地优先的笔记系统"
-6. Update config: `local_commit_count: 1`
+6. Check unpushed commits: If >= 10, auto push
 
 ### Output Feedback
 ```
-✅ 笔记已成功记录到知识库！
+✅ 笔记已成功记录到知识库!
 
 笔记详情:
 - 📝 标题: 思源笔记 (SiYuan) - 本地优先的笔记系统
@@ -258,7 +263,7 @@ bash scripts/update-index.sh categories data/
 4. ✓ 更新笔记清单
 5. ✓ Git 本地提交
 
-当前进度: 1/10 (达到 10 次提交后自动推送)
+当前进度: 1 个未推送提交 (达到 10 次后自动推送)
 ```
 
 ## Related Resources

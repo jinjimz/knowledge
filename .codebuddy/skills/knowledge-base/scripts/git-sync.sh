@@ -32,21 +32,14 @@ get_config() {
 }
 
 PUSH_THRESHOLD=$(get_config "push_threshold")
-LOCAL_COUNT=$(get_config "local_commit_count")
 BRANCH=$(get_config "default_branch")
 
 PUSH_THRESHOLD=${PUSH_THRESHOLD:-10}
-LOCAL_COUNT=${LOCAL_COUNT:-0}
 BRANCH=${BRANCH:-main}
 
-# 更新配置中的 local_commit_count
-update_commit_count() {
-    local new_count=$1
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        sed -i '' "s/local_commit_count: [0-9]*/local_commit_count: $new_count/" "$CONFIG_FILE"
-    else
-        sed -i "s/local_commit_count: [0-9]*/local_commit_count: $new_count/" "$CONFIG_FILE"
-    fi
+# 获取本地未推送的提交数
+get_unpushed_count() {
+    git log @{u}.. --oneline 2>/dev/null | wc -l | tr -d ' '
 }
 
 case "$ACTION" in
@@ -59,14 +52,13 @@ case "$ACTION" in
         git add .
         git commit -m "$MESSAGE" || echo "没有需要提交的更改"
         
-        # 增加本地提交计数
-        NEW_COUNT=$((LOCAL_COUNT + 1))
-        update_commit_count $NEW_COUNT
+        # 获取未推送的提交数
+        UNPUSHED_COUNT=$(get_unpushed_count)
         
-        echo "✅ 本地提交完成 ($NEW_COUNT/$PUSH_THRESHOLD)"
+        echo "✅ 本地提交完成 ($UNPUSHED_COUNT 个未推送提交,阈值: $PUSH_THRESHOLD)"
         
         # 检查是否需要推送
-        if [ $NEW_COUNT -ge $PUSH_THRESHOLD ]; then
+        if [ $UNPUSHED_COUNT -ge $PUSH_THRESHOLD ]; then
             echo "📤 达到推送阈值，开始推送..."
             "$0" push "$KB_PATH"
         fi
@@ -84,9 +76,6 @@ case "$ACTION" in
             exit 1
         }
         
-        # 重置计数
-        update_commit_count 0
-        
         echo "✅ 推送完成"
         ;;
         
@@ -102,9 +91,6 @@ case "$ACTION" in
         
         # 推送
         git push -u origin "$BRANCH" 2>/dev/null || echo "⚠️ 推送失败"
-        
-        # 重置计数
-        update_commit_count 0
         
         echo "✅ 同步完成"
         ;;

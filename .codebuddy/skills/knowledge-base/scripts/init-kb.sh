@@ -43,7 +43,6 @@ git:
   remote_url: "$REMOTE_URL"
   default_branch: "main"
   push_threshold: 10
-  local_commit_count: 0
   auto_pull_before_push: true
   conflict_resolution: "manual"
   commit_message_template: "📝 {action}: {title}"
