@@ -1,10 +1,15 @@
 #!/bin/bash
 # 初始化知识库
 # 用法: init-kb.sh <路径> [远程地址]
+# 
+# 注意：
+#   - <路径> 应指向知识库数据目录（通常是 <workspace>/data/）
+#   - 如果要初始化整个项目，请传入 <workspace>/data/ 作为路径
+#   - 例如：init-kb.sh /Users/coriase/work/knowledge/data
 
 set -e
 
-KB_PATH="${1:-$HOME/knowledge}"
+KB_PATH="${1:-$HOME/knowledge/data}"
 REMOTE_URL="${2:-https://github.com/jinjimz/knowledge}"
 
 echo "📚 初始化知识库: $KB_PATH"
@@ -133,8 +138,9 @@ cat > "$KB_PATH/.gitignore" << 'EOF'
 EOF
 fi
 
-# 初始化 Git
-cd "$KB_PATH"
+# 初始化 Git（在父目录，即整个项目根目录）
+PARENT_DIR=$(dirname "$KB_PATH")
+cd "$PARENT_DIR"
 if [ ! -d ".git" ]; then
     git init
     git add .
@@ -145,3 +151,4 @@ if [ ! -d ".git" ]; then
 fi
 
 echo "✅ 知识库初始化完成: $KB_PATH"
+echo "💡 Git 仓库位于: $PARENT_DIR"

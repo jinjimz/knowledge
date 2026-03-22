@@ -4,6 +4,25 @@
 
 ## 快速开始
 
+### 📁 重要：知识库结构说明
+
+当前知识库采用**分离式结构**：
+
+```
+/Users/coriase/work/knowledge/          # Git 仓库根目录
+├── .codebuddy/                         # CodeBuddy 配置（不参与知识库内容）
+│   └── skills/knowledge-base/          # 本 Skill 及脚本
+├── data/                               # 📁 知识库数据目录（核心）
+│   ├── .kb-config.yaml                 # 知识库配置文件
+│   ├── _index/                         # 索引文件
+│   ├── _templates/                     # 笔记模板
+│   ├── _attachments/                   # 附件存储
+│   └── [分类目录]/                     # 笔记内容
+└── .gitignore
+```
+
+**所有脚本操作都基于 `data/` 目录！**
+
 ### 安装依赖
 
 ```bash
@@ -27,6 +46,8 @@ python3 .codebuddy/skills/knowledge-base/scripts/add-note.py \
   "Technology/AI" \
   "/path/to/source.md"
 ```
+
+**注意**：脚本已自动配置为操作 `data/` 目录，无需手动指定路径。
 
 **参数说明**：
 1. **标题**：笔记标题
@@ -117,22 +138,27 @@ python3 .codebuddy/skills/knowledge-base/scripts/add-note.py \
 ## 目录结构
 
 ```
-knowledge/
-├── _index/                    # 索引目录
-│   ├── categories.yaml       # 分类索引
-│   ├── tags.yaml            # 标签索引
-│   └── notes-manifest.yaml  # 笔记清单
-├── _templates/               # 模板目录
-│   └── default.md           # 默认模板
-├── _attachments/            # 附件目录
-│   └── YYYY-MM-DD/         # 按日期组织
-├── Technology/              # 分类目录
-│   ├── AI/
-│   ├── Programming/
+/Users/coriase/work/knowledge/   # 项目根目录（Git仓库）
+├── .codebuddy/                  # CodeBuddy配置
+│   └── skills/knowledge-base/   # 本Skill及脚本
+├── data/                        # 📁 知识库数据目录
+│   ├── .kb-config.yaml         # 知识库配置
+│   ├── _index/                 # 索引目录
+│   │   ├── categories.yaml    # 分类索引
+│   │   ├── tags.yaml         # 标签索引
+│   │   └── notes-manifest.yaml # 笔记清单
+│   ├── _templates/            # 模板目录
+│   │   └── default.md        # 默认模板
+│   ├── _attachments/         # 附件目录
+│   │   └── YYYY-MM-DD/      # 按日期组织
+│   ├── Technology/           # 分类目录
+│   │   ├── AI/
+│   │   ├── Programming/
+│   │   └── ...
+│   ├── Learning/
+│   ├── Work/
 │   └── ...
-├── Learning/
-├── Work/
-└── ...
+└── .gitignore
 ```
 
 ## 索引文件说明
@@ -224,8 +250,8 @@ ai_summary: "AI生成的摘要"
 ## Git工作流
 
 脚本会自动：
-1. `git add` 新笔记和索引文件
-2. `git commit` 提交变更
+1. `git add` 新笔记和索引文件（在 `data/` 目录下）
+2. `git commit` 提交变更（在项目根目录）
 3. 提交信息格式：
    ```
    添加笔记: 笔记标题
@@ -236,13 +262,13 @@ ai_summary: "AI生成的摘要"
 
 需要手动推送：
 ```bash
-cd knowledge
+cd /Users/coriase/work/knowledge
 git push
 ```
 
 ## 与Obsidian集成
 
-1. 在Obsidian中打开 `knowledge` 目录作为vault
+1. 在Obsidian中打开 `/Users/coriase/work/knowledge/data` 目录作为vault
 2. 所有笔记自动同步显示
 3. 支持：
    - Wiki链接：`[[笔记标题]]`
@@ -263,14 +289,14 @@ pip3 install pyyaml
 
 运行更新索引脚本：
 ```bash
-cd knowledge
-../.codebuddy/skills/knowledge-base/scripts/update-index.sh
+cd /Users/coriase/work/knowledge
+bash .codebuddy/skills/knowledge-base/scripts/update-index.sh all data/
 ```
 
 ### Git冲突
 
 ```bash
-cd knowledge
+cd /Users/coriase/work/knowledge
 git pull --rebase
 # 解决冲突后
 git push
@@ -297,7 +323,13 @@ git push
 
 ## 更新日志
 
-### 2026-03-22
+### 2026-03-22 v2
+- ✅ **重构目录结构**：采用分离式结构，知识库数据位于 `data/` 目录
+- ✅ 更新 add-note.py 路径配置
+- ✅ 更新 init-kb.sh 支持新结构
+- ✅ 完善文档说明
+
+### 2026-03-22 v1
 - ✅ 创建add-note.py核心脚本
 - ✅ 添加源文件复制功能
 - ✅ 智能frontmatter处理

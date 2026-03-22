@@ -19,7 +19,9 @@ except ImportError:
 
 # 配置
 SCRIPT_DIR = Path(__file__).parent
-KB_ROOT = (SCRIPT_DIR / '../../../knowledge').resolve()
+# 从 .codebuddy/skills/knowledge-base/scripts/ 向上4级到达项目根目录
+WORKSPACE_ROOT = (SCRIPT_DIR / '../../../..').resolve()
+KB_ROOT = WORKSPACE_ROOT / 'data'
 INDEX_DIR = KB_ROOT / '_index'
 TEMPLATE_FILE = KB_ROOT / '_templates' / 'default.md'
 

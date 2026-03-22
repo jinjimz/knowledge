@@ -4,5 +4,10 @@
 *~
 ./data/.obsidian/workspace.json
 ./data/.obsidian/workspace-mobile.json
-.codebuddy
+
+# CodeBuddy - 只忽略工作记忆，保留 skills
+.codebuddy/memory/
+.codebuddy/teams/
+.codebuddy/.session*
+
 tmp
